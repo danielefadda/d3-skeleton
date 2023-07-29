@@ -1,0 +1,24 @@
+{
+  "name": "fiper_d3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^7.8.5",
+    "express": "^4.18.2",
+    "package.json": "^2.0.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "browser-sync": "^2.29.3",
+    "cross-env": "^7.0.3",
+    "d3": "^7.8.5",
+    "express": "^4.18.2"
+  }
+}
