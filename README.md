@@ -1,5 +1,4 @@
-# A minimal example to build a d3 visualization
-
+# A minimal example to build a d3 visualization and serve it with express
 This is a minimal example to build a d3 visualization. It uses the `D3 JS`[d3.js](https://d3js.org/) library to create a simple bar chart. And `express` to serve the visualization.
 
 ## Usage

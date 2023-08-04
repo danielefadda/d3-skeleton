@@ -4,13 +4,50 @@
     <meta charset="UTF-8">
     <title>D3 minimal example</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
     <!--   substitute the above line with the following line if you want to use the latest version of d3.js installed from npm-->
 <!--    <script src="../node_modules/d3/dist/d3.min.js"></script>-->
 </head>
 <body>
-<h1>A minimal example using d3.js</h1>
-<div id="visualization"></div>
 
-<script src="script.js"></script>
+<div>
+    <label for="node-select">Select a Logo:</label>
+    <select id="node-select"></select>
+
+
+
+
+
+</div>
+<hr>
+<div id="chart" style="margin: 50px 0 50px 0;"></div>
+<br>
+<div id="downlaod"></div>
+<div id="downlaod2"></div>
+<script>
+    d3.json("data/sbd-nodes.json").then(function(data) {
+        console.log(data);
+        return d3.select("#node-select")
+            .attr("class", "select")
+            .selectAll("option")
+            .data(data, function(d) { return d.Node; })
+            .enter()
+            .append("option")
+            .attr("value", d => d.CODE)
+            .text(d => d.Node);
+    });
+</script>
+
+<script src="update_logo.js"></script>
+<!--<script src="chart_example.js"></script>-->
+
 </body>
 </html>
+
+<!--        <option value="SBD">MAIN RESEARCH INFRASTRUCRUE</option>-->
+<!--        <option value="MASTER">MASTER</option>-->
+<!--        <option value="FRANCE">France</option>-->
+<!--        <option value="ITA">Italy</option>-->
+<!--        <option value="GER">Germany</option>-->
+<!--        <option value="POR">Portugal</option>-->
+<!--        &lt;!&ndash; Add more options as needed &ndash;&gt;-->
