@@ -1,5 +1,5 @@
 // Parameters to be set by the user
-const sideLength = 100;
+let sideLength = 100;
 
 // Internal parameters
 const numCells = 5;
@@ -120,7 +120,7 @@ function drawGrid() {
 
 
 // Function to draw the logo name
-function logoName(selection, data) {
+function logoName(selection, data, sideLength) {
     const logoGroup = selection.append("g") // Append to the selection
         .attr("class", "logo-text");
     if (debugGrid){
@@ -174,11 +174,11 @@ function logoName(selection, data) {
     function me(selection){
     logoGroup.append('g')
         .attr("class", "logo-main-name")
-        .attr("transform", `translate(${-(x_logo)/2.5},0)`) // to fix left padding
+        .attr("transform", `translate(${-(sideLength/numCells)/2.5},0)`) // to fix left padding
         .append("text")
-        .attr("x", sideLength + x_logo)
-        .attr("y", (x_logo) * 3 + (x_logo/4))
-        .attr("font-size", `${(x_logo) * 3 * 1.5}px`)
+        .attr("x", sideLength + sideLength/numCells)
+        .attr("y", (sideLength/numCells) * 3 + (sideLength/numCells/4))
+        .attr("font-size", `${(sideLength/numCells) * 3 * 1.5}px`)
         .attr("font-family", "Rajdhani")
         .attr("font-weight", 300)
         .attr("fill", "#E83947")
@@ -199,10 +199,10 @@ function logoName(selection, data) {
         .data(data)
         .append("text")
         .attr("class", "logo-subtitle")
-        .attr("x", sideLength + x_logo)
+        .attr("x", sideLength + sideLength/numCells)
         .attr("y", (sideLength))
-        .attr("transform", `translate(-${(x_logo)*0.1},${-(x_logo)/4})`) // to fix left padding
-        .attr("font-size", `${(x_logo)*1.27}px`)
+        .attr("transform", `translate(-${(sideLength/numCells)*0.1},${-(sideLength/numCells)/4})`) // to fix left padding
+        .attr("font-size", `${(sideLength/numCells)*1.27}px`)
         .attr("font-family", "Rajdhani")
         .attr("font-weight", 500)
         .attr("fill", "#273580")
@@ -215,9 +215,9 @@ function logoName(selection, data) {
         .append("text")
         .attr("class", "logo-suffix")
         .attr("x", sideLength * 5.21)
-        .attr("y", x_logo *1.2)
-        .attr("transform", `translate(-${(x_logo)*0.1},${-(x_logo)/4})`) // to fix left padding
-        .attr("font-size", `${(x_logo)*1.27}px`)
+        .attr("y", sideLength/numCells *1.2)
+        .attr("transform", `translate(-${(sideLength/numCells)*0.1},${-(sideLength/numCells)/4})`) // to fix left padding
+        .attr("font-size", `${(sideLength/numCells)*1.27}px`)
         .attr("font-family", "Rajdhani")
         .attr("font-weight", 800)
         .attr("fill", "#273580")
@@ -236,7 +236,7 @@ function logoName(selection, data) {
     return me
 }
 
-function visualize(data) {
+function visualize(data, sideLength = 100) {
     const svg = d3.select("#chart")
         .append("svg")
         .attr("width", sideLength * 5.6) //5.21 is the width of the logo
@@ -247,14 +247,12 @@ function visualize(data) {
     const matrix = scaleMatrix(5, [data[0].posX,data[0].posY], 100, 10);
     console.log("matrix", matrix)
 
-
     // Disegna la griglia utilizzando la matrice scalata
     const dg = drawGrid().invertedColors((data[0].posX + data[0].posY) % 2);
     const selection = svg.selectAll(".grid").data([matrix]);
     const symbol = selection.enter().append("g").attr("class", "grid").call(dg);
-    const dt = logoName(symbol,data).allTextColor("green");
+    const dt = logoName(symbol,data,sideLength).allTextColor("green");
     return svg.call(dt)
-
 
 }
 
@@ -266,11 +264,26 @@ document.getElementById("node-select").addEventListener("change", function () {
 
     d3.json("data/sbd-nodes.json").then(function (data) {
 
-        console.log("data", data)
+        // console.log("data", data)
         const fData = data.filter(d => d.CODE === selectedNode);
-        console.log("data filtered", fData)
-        visualize(fData);
+        // console.log("data filtered", fData)
+        visualize(fData, sideLength);
     });
+});
+
+document.getElementById("sideLength-slider").addEventListener("change", function () {
+    sideLength = parseFloat(this.value); // Update the sideLength variable with the value of the slider
+    console.log("sideLength main", sideLength)
+    // Remove the old SVG
+    d3.select("#chart").selectAll("svg").remove();
+
+    // Redraw your visualization here with the new sideLength
+    d3.json("data/sbd-nodes.json").then(function (data) {
+        const selectedNode = document.getElementById("node-select").value;
+        const fData = data.filter(d => d.CODE === selectedNode);
+        visualize(fData, sideLength);
+    });
+    return sideLength
 });
 
 
@@ -325,5 +338,6 @@ function downloadButtons() {
     }
 }
 downloadButtons();
+
 
 
