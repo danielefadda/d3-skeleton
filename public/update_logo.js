@@ -5,6 +5,8 @@ const sideLength = 100;
 const numCells = 5;
 const debugGrid = false;
 
+// Create an element
+
 let x_logo = sideLength / numCells
 
 // Function to draw the data to be used by the grid
@@ -27,7 +29,8 @@ function scaleMatrix(side, center, startValue, stepValue) {
 // Function to draw the grid
 function drawGrid() {
     let invertedColors = false;
-    let sideWidth = sideLength;
+    let sideWidth;
+    sideWidth = sideLength;
     const sScale = d3
         .scaleBand()
         .range([0, sideWidth])
@@ -91,6 +94,7 @@ function drawGrid() {
             .attr("height", sScale.bandwidth())
             .attr("x", -sScale.bandwidth() / 2)
             .attr("y", -sScale.bandwidth() / 2);
+
     }
 
     me.invertedColors = function (value) {
@@ -99,9 +103,8 @@ function drawGrid() {
         return me;
     };
 
-    me.whiteVersion = function (value) {
-        if (!arguments.length) return whiteVersion;
-        whiteVersion = value;
+    me.whiteVersion = function () {
+        d3.selectAll('rect').attr('fill', 'green')
         return me;
     };
 
@@ -168,6 +171,7 @@ function logoName(selection, data) {
 
     }
 
+    function me(selection){
     logoGroup.append('g')
         .attr("class", "logo-main-name")
         .attr("transform", `translate(${-(x_logo)/2.5},0)`) // to fix left padding
@@ -220,13 +224,23 @@ function logoName(selection, data) {
         // .attr("alignment-baseline", "baseline")
         // .text(subText.toUpperCase())
         .text(d => d.suffix);
+
+    }
+    me.allTextColor = function (value) {
+        if (!arguments.length) return whiteText;
+        console.log("colored text")
+        d3.selectAll('text').attr('fill', value)
+        return me;
+    };
+
+    return me
 }
 
 function visualize(data) {
     const svg = d3.select("#chart")
         .append("svg")
         .attr("width", sideLength * 5.6) //5.21 is the width of the logo
-        .attr("height", sideLength);
+        .attr("height", sideLength)
 
     console.log("visualize data", data)
     // Crea la matrice scalata
@@ -238,9 +252,10 @@ function visualize(data) {
     const dg = drawGrid().invertedColors((data[0].posX + data[0].posY) % 2);
     const selection = svg.selectAll(".grid").data([matrix]);
     const symbol = selection.enter().append("g").attr("class", "grid").call(dg);
-    const dt = logoName(symbol,data);
-    const texts = svg.call(dt);
-    return texts
+    const dt = logoName(symbol,data).allTextColor("green");
+    return svg.call(dt)
+
+
 }
 
 document.getElementById("node-select").addEventListener("change", function () {
@@ -262,10 +277,10 @@ document.getElementById("node-select").addEventListener("change", function () {
 
 // Start the script by visualizing the "SBD" value
 d3.json("data/sbd-nodes.json").then(function (data) {
-    const initialNode = "SBD"; // Change this to the desired initial value
-    const initialData = data.filter(d => d.CODE === selectedNode);
-
-    visualize(initialData);
+    // const initialNode = "SBD"; // Change this to the desired initial value
+    // const initialData = data.filter(d => d.CODE === selectedNode);
+    console.log('------',data[0])
+    visualize([data[0]]);
 });
 
 function downloadButtons() {
