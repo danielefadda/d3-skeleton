@@ -274,6 +274,8 @@ document.getElementById("node-select").addEventListener("change", function () {
 document.getElementById("sideLength-slider").addEventListener("change", function () {
     sideLength = parseFloat(this.value); // Update the sideLength variable with the value of the slider
     console.log("sideLength main", sideLength)
+    document.querySelector("label[for='sideLength-slider']").textContent = `Set Height of the logo: ${sideLength} px, Width: ${Math.round(sideLength * 5.6)} px`;
+
     // Remove the old SVG
     d3.select("#chart").selectAll("svg").remove();
 
@@ -286,7 +288,16 @@ document.getElementById("sideLength-slider").addEventListener("change", function
     return sideLength
 });
 
-
+document.getElementById("change-color").addEventListener("click", function () {
+    d3.selectAll('text').attr('fill', 'black');
+    d3.selectAll('tspan').attr('fill', 'black');
+    d3.selectAll('rect').attr('fill', 'black');
+});
+document.getElementById("change-color-white").addEventListener("click", function () {
+    d3.selectAll('text').attr('fill', 'white');
+    d3.selectAll('tspan').attr('fill', 'white');
+    d3.selectAll('rect').attr('fill', 'white');
+});
 
 // Start the script by visualizing the "SBD" value
 d3.json("data/sbd-nodes.json").then(function (data) {

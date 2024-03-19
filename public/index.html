@@ -13,14 +13,25 @@
 <div>
     <label for="node-select">Select a Logo:</label>
     <select id="node-select"></select>
-    <label for="sideLength-slider">Set Height of the logo:</label>
-    <input type="range" id="sideLength-slider" min="1" max="300" value="100">
+    <br>
+    <br>
+    <input type="range" id="sideLength-slider" min="1" max="250" value="100">
+    <label for="sideLength-slider">Set Height of the logo: 100, Width: 560 px</label>
+    <br>
+    <br>
+    <button id="change-color">Black Version</button>
+    <button id="change-color-white">White Version</button>
+
 </div>
 
+<br>
 <hr>
 <div id="chart" style="margin: 50px 0 50px 0;"></div>
 <br>
+<hr>
+<br>
 <div id="downlaod"></div>
+<br>
 <div id="downlaod2"></div>
 <script>
     d3.json("data/sbd-nodes.json").then(function(data) {
