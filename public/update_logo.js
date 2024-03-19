@@ -1,9 +1,20 @@
+/*
+This JavaScript code is part of a larger project that visualizes data in a unique way. The code is responsible for
+creating a grid-based visualization of data, where each cell in the grid represents a data point.
+The size of the cells and the colors used in the visualization can be adjusted by the user through a slider and buttons.
+The code also includes functionality to change the color of all text elements in the visualization, and to download
+the visualization as an SVG or PNG image. The visualization is redrawn whenever the user changes the selected
+data point or adjusts the size of the cells.
+*/
+
 // Parameters to be set by the user
 let sideLength = 100;
+let colorOutput = '';
 
 // Internal parameters
 const numCells = 5;
 const debugGrid = false;
+let cData = '';
 
 // Create an element
 
@@ -116,14 +127,11 @@ function drawGrid() {
 }
 
 
-
-
-
 // Function to draw the logo name
 function logoName(selection, data, sideLength) {
     const logoGroup = selection.append("g") // Append to the selection
         .attr("class", "logo-text");
-    if (debugGrid){
+    if (debugGrid) {
         logoGroup.append('g')
             .append("line")
             .attr("x1", 0)
@@ -171,64 +179,63 @@ function logoName(selection, data, sideLength) {
 
     }
 
-    function me(selection){
-    logoGroup.append('g')
-        .attr("class", "logo-main-name")
-        .attr("transform", `translate(${-(sideLength/numCells)/2.5},0)`) // to fix left padding
-        .append("text")
-        .attr("x", sideLength + sideLength/numCells)
-        .attr("y", (sideLength/numCells) * 3 + (sideLength/numCells/4))
-        .attr("font-size", `${(sideLength/numCells) * 3 * 1.5}px`)
-        .attr("font-family", "Rajdhani")
-        .attr("font-weight", 300)
-        .attr("fill", "#E83947")
-        .append("tspan")
-        .text("SO")
-        .append("tspan")
-        .text("BIG")
-        .attr("font-weight", 500)
-        .attr("fill", "#273580")
-        .append("tspan")
-        .text("DATA")
-        .attr("font-weight", 700)
-        .attr("fill", "#E83947");
+    function me(selection) {
+        logoGroup.append('g')
+            .attr("class", "logo-main-name")
+            .attr("transform", `translate(${-(sideLength / numCells) / 2.5},0)`) // to fix left padding
+            .append("text")
+            .attr("x", sideLength + sideLength / numCells)
+            .attr("y", (sideLength / numCells) * 3 + (sideLength / numCells / 4))
+            .attr("font-size", `${(sideLength / numCells) * 3 * 1.5}px`)
+            .attr("font-family", "Rajdhani")
+            .attr("font-weight", 300)
+            .attr("fill", "#E83947")
+            .append("tspan")
+            .text("SO")
+            .append("tspan")
+            .text("BIG")
+            .attr("font-weight", 500)
+            .attr("fill", "#273580")
+            .append("tspan")
+            .text("DATA")
+            .attr("font-weight", 700)
+            .attr("fill", "#E83947");
 
-    console.log("data into logoName: ", data)
 
-    logoGroup.append('g')
-        .data(data)
-        .append("text")
-        .attr("class", "logo-subtitle")
-        .attr("x", sideLength + sideLength/numCells)
-        .attr("y", (sideLength))
-        .attr("transform", `translate(-${(sideLength/numCells)*0.1},${-(sideLength/numCells)/4})`) // to fix left padding
-        .attr("font-size", `${(sideLength/numCells)*1.27}px`)
-        .attr("font-family", "Rajdhani")
-        .attr("font-weight", 500)
-        .attr("fill", "#273580")
-        // .attr("alignment-baseline", "baseline")
-        // .text(subText.toUpperCase())
-        .text(d => d.label);
+        logoGroup.append('g')
+            .data(data)
+            .append("text")
+            .attr("class", "logo-subtitle")
+            .attr("x", sideLength + sideLength / numCells)
+            .attr("y", (sideLength))
+            .attr("transform", `translate(-${(sideLength / numCells) * 0.1},${-(sideLength / numCells) / 4})`) // to fix left padding
+            .attr("font-size", `${(sideLength / numCells) * 1.27}px`)
+            .attr("font-family", "Rajdhani")
+            .attr("font-weight", 500)
+            .attr("fill", "#273580")
+            // .attr("alignment-baseline", "baseline")
+            // .text(subText.toUpperCase())
+            .text(d => d.label);
 
-    logoGroup.append('g')
-        .data(data)
-        .append("text")
-        .attr("class", "logo-suffix")
-        .attr("x", sideLength * 5.21)
-        .attr("y", sideLength/numCells *1.2)
-        .attr("transform", `translate(-${(sideLength/numCells)*0.1},${-(sideLength/numCells)/4})`) // to fix left padding
-        .attr("font-size", `${(sideLength/numCells)*1.27}px`)
-        .attr("font-family", "Rajdhani")
-        .attr("font-weight", 800)
-        .attr("fill", "#273580")
-        // .attr("alignment-baseline", "baseline")
-        // .text(subText.toUpperCase())
-        .text(d => d.suffix);
+        logoGroup.append('g')
+            .data(data)
+            .append("text")
+            .attr("class", "logo-suffix")
+            .attr("x", sideLength * 5.21)
+            .attr("y", sideLength / numCells * 1.2)
+            .attr("transform", `translate(-${(sideLength / numCells) * 0.1},${-(sideLength / numCells) / 4})`) // to fix left padding
+            .attr("font-size", `${(sideLength / numCells) * 1.27}px`)
+            .attr("font-family", "Rajdhani")
+            .attr("font-weight", 800)
+            .attr("fill", "#273580")
+            // .attr("alignment-baseline", "baseline")
+            // .text(subText.toUpperCase())
+            .text(d => d.suffix);
 
     }
+
     me.allTextColor = function (value) {
         if (!arguments.length) return whiteText;
-        console.log("colored text")
         d3.selectAll('text').attr('fill', value)
         return me;
     };
@@ -242,16 +249,15 @@ function visualize(data, sideLength = 100) {
         .attr("width", sideLength * 5.6) //5.21 is the width of the logo
         .attr("height", sideLength)
 
-    console.log("visualize data", data)
     // Crea la matrice scalata
-    const matrix = scaleMatrix(5, [data[0].posX,data[0].posY], 100, 10);
-    console.log("matrix", matrix)
+    const matrix = scaleMatrix(5, [data[0].posX, data[0].posY], 100, 10);
+
 
     // Disegna la griglia utilizzando la matrice scalata
     const dg = drawGrid().invertedColors((data[0].posX + data[0].posY) % 2);
     const selection = svg.selectAll(".grid").data([matrix]);
     const symbol = selection.enter().append("g").attr("class", "grid").call(dg);
-    const dt = logoName(symbol,data,sideLength).allTextColor("green");
+    const dt = logoName(symbol, data, sideLength).allTextColor("green");
     return svg.call(dt)
 
 }
@@ -263,18 +269,17 @@ document.getElementById("node-select").addEventListener("change", function () {
     d3.select("#chart").selectAll("svg").remove();
 
     d3.json("data/sbd-nodes.json").then(function (data) {
-
-        // console.log("data", data)
         const fData = data.filter(d => d.CODE === selectedNode);
-        // console.log("data filtered", fData)
         visualize(fData, sideLength);
     });
+    cData = selectedNode
+    return cData
 });
 
 document.getElementById("sideLength-slider").addEventListener("change", function () {
     sideLength = parseFloat(this.value); // Update the sideLength variable with the value of the slider
     console.log("sideLength main", sideLength)
-    document.querySelector("label[for='sideLength-slider']").textContent = `Set Height of the logo: ${sideLength} px, Width: ${Math.round(sideLength * 5.6)} px`;
+    document.querySelector("label[for='sideLength-slider']").textContent = `W: ${Math.round(sideLength * 5.6)} px - H:${sideLength} px`;
 
     // Remove the old SVG
     d3.select("#chart").selectAll("svg").remove();
@@ -284,6 +289,7 @@ document.getElementById("sideLength-slider").addEventListener("change", function
         const selectedNode = document.getElementById("node-select").value;
         const fData = data.filter(d => d.CODE === selectedNode);
         visualize(fData, sideLength);
+        colorOutput = '';
     });
     return sideLength
 });
@@ -292,20 +298,16 @@ document.getElementById("change-color").addEventListener("click", function () {
     d3.selectAll('text').attr('fill', 'black');
     d3.selectAll('tspan').attr('fill', 'black');
     d3.selectAll('rect').attr('fill', 'black');
+    return colorOutput = '_black';
+
 });
 document.getElementById("change-color-white").addEventListener("click", function () {
     d3.selectAll('text').attr('fill', 'white');
     d3.selectAll('tspan').attr('fill', 'white');
     d3.selectAll('rect').attr('fill', 'white');
+    return colorOutput = '_white';
 });
 
-// Start the script by visualizing the "SBD" value
-d3.json("data/sbd-nodes.json").then(function (data) {
-    // const initialNode = "SBD"; // Change this to the desired initial value
-    // const initialData = data.filter(d => d.CODE === selectedNode);
-    console.log('------',data[0])
-    visualize([data[0]]);
-});
 
 function downloadButtons() {
     <!-- Crea due bottoni per il download e inseriscili nel DOM Sotto il tag con id download -->
@@ -318,6 +320,7 @@ function downloadButtons() {
     downloadButtonPNG.innerText = "Download the logo as PNG";
     downloadButtonPNG.addEventListener("click", () => downloadImage("png"));
     document.querySelector("#downlaod2").appendChild(downloadButtonPNG);
+    console.log('data',)
 
 // Scarica il file SVG o PNG a seconda del parametro passato
     function downloadImage(format) {
@@ -327,10 +330,9 @@ function downloadButtons() {
         if (format === "svg") {
             const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
             const svgUrl = URL.createObjectURL(svgBlob);
-
             const downloadLink = document.createElement("a");
             downloadLink.href = svgUrl;
-            downloadLink.download = "so_big_data.svg";
+            downloadLink.download = `Logo_SoBigData_${cData}_${Math.round(sideLength * 5.6)}_X_${sideLength}${colorOutput}.svg`;
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
@@ -341,14 +343,22 @@ function downloadButtons() {
 
             const downloadLink = document.createElement("a");
             downloadLink.href = pngUrl;
-            downloadLink.download = "so_big_data.png";
+            downloadLink.download = `Logo_SoBigData_${cData}_${Math.round(sideLength * 5.6)}_X_${sideLength}${colorOutput}.png`;
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
         }
     }
 }
+
 downloadButtons();
 
+// Start the script by visualizing the "SBD" value
+d3.json("data/sbd-nodes.json").then(function (data) {
+    visualize([data[0]]);
 
+    cData = data[0].CODE
+    console.log('cData', cData)
+    return cData.CODE
+});
 
