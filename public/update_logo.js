@@ -180,26 +180,24 @@ function logoName(selection, data, sideLength) {
     }
 
     function me(selection) {
-        logoGroup.append('g')
+        const mainNameGroup = logoGroup.append('g')
             .attr("class", "logo-main-name")
             .attr("transform", `translate(${-(sideLength / numCells) / 2.5},0)`) // to fix left padding
-            .append("text")
+        const SoNameGroup = mainNameGroup.append("text")
             .attr("x", sideLength + sideLength / numCells)
             .attr("y", (sideLength / numCells) * 3 + (sideLength / numCells / 4))
             .attr("font-size", `${(sideLength / numCells) * 3 * 1.5}px`)
-            .attr("font-family", "Rajdhani")
-            .attr("font-weight", 300)
             .attr("fill", "#E83947")
-            .append("tspan")
+            .attr("font-family", "Rajdhani-Medium")
             .text("SO")
-            .append("tspan")
-            .text("BIG")
-            .attr("font-weight", 500)
+        const BigNameGroup = SoNameGroup.append("tspan")
+            .attr("font-family", "Rajdhani-SemiBold")
             .attr("fill", "#273580")
-            .append("tspan")
+            .text("BIG")
+        BigNameGroup.append("tspan")
+            .attr("fill", "#E83947")
+            .attr("font-family", "Rajdhani-Bold")
             .text("DATA")
-            .attr("font-weight", 700)
-            .attr("fill", "#E83947");
 
 
         logoGroup.append('g')
@@ -210,8 +208,7 @@ function logoName(selection, data, sideLength) {
             .attr("y", (sideLength))
             .attr("transform", `translate(-${(sideLength / numCells) * 0.1},${-(sideLength / numCells) / 4})`) // to fix left padding
             .attr("font-size", `${(sideLength / numCells) * 1.27}px`)
-            .attr("font-family", "Rajdhani")
-            .attr("font-weight", 500)
+            .attr("font-family", "Rajdhani-SemiBold")
             .attr("fill", "#273580")
             // .attr("alignment-baseline", "baseline")
             // .text(subText.toUpperCase())
@@ -225,8 +222,7 @@ function logoName(selection, data, sideLength) {
             .attr("y", sideLength / numCells * 1.2)
             .attr("transform", `translate(-${(sideLength / numCells) * 0.1},${-(sideLength / numCells) / 4})`) // to fix left padding
             .attr("font-size", `${(sideLength / numCells) * 1.27}px`)
-            .attr("font-family", "Rajdhani")
-            .attr("font-weight", 800)
+            .attr("font-family", "Rajdhani-Bold")
             .attr("fill", "#273580")
             // .attr("alignment-baseline", "baseline")
             // .text(subText.toUpperCase())

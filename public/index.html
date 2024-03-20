@@ -5,8 +5,8 @@
     <title>SoBigData Logo Generator</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" />
-
+    <!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" />-->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -15,7 +15,11 @@
     <select id="node-select"></select>
     <br>
     <br>
-    <input type="range" id="sideLength-slider" min="1" max="250" value="100">
+    <input type="range"
+           id="sideLength-slider"
+           min="40"
+           max="250"
+           value="100">
     <label for="sideLength-slider">W: 560 - H:100 px</label>
     <br>
     <br>
@@ -26,7 +30,8 @@
 
 <br>
 <hr>
-<div id="chart" style="margin: 50px 0 50px 0;"></div>
+<div id="chart"
+     style="margin: 50px 0 50px 0;"></div>
 <br>
 <hr>
 <br>
@@ -34,12 +39,14 @@
 <br>
 <div id="downlaod2"></div>
 <script>
-    d3.json("data/sbd-nodes.json").then(function(data) {
+    d3.json("data/sbd-nodes.json").then(function (data) {
         console.log(data);
         return d3.select("#node-select")
             .attr("class", "select")
             .selectAll("option")
-            .data(data, function(d) { return d.Node; })
+            .data(data, function (d) {
+                return d.Node;
+            })
             .enter()
             .append("option")
             .attr("value", d => d.CODE)
@@ -52,11 +59,3 @@
 
 </body>
 </html>
-
-<!--        <option value="SBD">MAIN RESEARCH INFRASTRUCRUE</option>-->
-<!--        <option value="MASTER">MASTER</option>-->
-<!--        <option value="FRANCE">France</option>-->
-<!--        <option value="ITA">Italy</option>-->
-<!--        <option value="GER">Germany</option>-->
-<!--        <option value="POR">Portugal</option>-->
-<!--        &lt;!&ndash; Add more options as needed &ndash;&gt;-->
