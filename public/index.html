@@ -5,39 +5,58 @@
     <title>SoBigData Logo Generator</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+    <script src="https://opentype.js.org/dist/opentype.js"></script>
     <!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" />-->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 </head>
 <body>
+<div class="container">
+    <header>
+        <h1>SoBigData Logo Generator</h1>
+        <h2>A tool to generate and download the SoBigData logo variants</h2>
+    </header>
+    <nav>
+        <!-- Navigation links go here -->
+        <div>
+            <h3>Instructions</h3>
+            <div class="instruction-section">
+                <label for="node-select">1. Select a Logo</label>
+                <select id="node-select"></select>
+            </div>
+            <div class="instruction-section">
+                <p>2. Select your preferred size</p>
+                <input type="range"
+                       id="sideLength-slider"
+                       min="40"
+                       max="180"
+                       step="10"
+                       value="100">
+                <label for="sideLength-slider">with: 560px, height: 100px</label>
+            </div>
+            <div class="instruction-section">
+                <p>3. Select a color variant</p>
+                <button id="change-color">Black</button>
+                <button id="change-color-white">White</button>
+            </div>
+            <p>4. Download your logo</p>
+            <div class="button-container">
 
-<div>
-    <label for="node-select">Select a Logo:</label>
-    <select id="node-select"></select>
-    <br>
-    <br>
-    <input type="range"
-           id="sideLength-slider"
-           min="40"
-           max="250"
-           value="100">
-    <label for="sideLength-slider">W: 560 - H:100 px</label>
-    <br>
-    <br>
-    <button id="change-color">Black Version</button>
-    <button id="change-color-white">White Version</button>
+                <div id="downlaod"></div>
+                <div id="downlaod2"></div>
+            </div>
 
+        </div>
+    </nav>
+    <main>
+        <!-- Main content goes here -->
+        <div id="chart">
+        </div>
+    </main>
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
 </div>
-
-<br>
-<hr>
-<div id="chart"
-     style="margin: 50px 0 50px 0;"></div>
-<br>
-<hr>
-<br>
-<div id="downlaod"></div>
-<br>
-<div id="downlaod2"></div>
 <script>
     d3.json("data/sbd-nodes.json").then(function (data) {
         console.log(data);
@@ -55,7 +74,5 @@
 </script>
 
 <script src="update_logo.js"></script>
-<!--<script src="chart_example.js"></script>-->
-
 </body>
 </html>

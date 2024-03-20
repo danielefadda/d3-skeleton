@@ -187,6 +187,7 @@ function logoName(selection, data, sideLength) {
             .attr("x", sideLength + sideLength / numCells)
             .attr("y", (sideLength / numCells) * 3 + (sideLength / numCells / 4))
             .attr("font-size", `${(sideLength / numCells) * 3 * 1.5}px`)
+            .append("tspan")
             .attr("fill", "#E83947")
             .attr("font-family", "Rajdhani-Medium")
             .text("SO")
@@ -275,7 +276,7 @@ document.getElementById("node-select").addEventListener("change", function () {
 document.getElementById("sideLength-slider").addEventListener("change", function () {
     sideLength = parseFloat(this.value); // Update the sideLength variable with the value of the slider
     console.log("sideLength main", sideLength)
-    document.querySelector("label[for='sideLength-slider']").textContent = `W: ${Math.round(sideLength * 5.6)} px - H:${sideLength} px`;
+    document.querySelector("label[for='sideLength-slider']").textContent = `with:  ${Math.round(sideLength * 5.6)} px, height: ${sideLength} px`;
 
     // Remove the old SVG
     d3.select("#chart").selectAll("svg").remove();
@@ -304,16 +305,20 @@ document.getElementById("change-color-white").addEventListener("click", function
     return colorOutput = '_white';
 });
 
+// Load the opentype.js library
+// const opentype = require('opentype.js');
+
+// Load the font
 
 function downloadButtons() {
     <!-- Crea due bottoni per il download e inseriscili nel DOM Sotto il tag con id download -->
     const downloadButtonSVG = document.createElement("button");
-    downloadButtonSVG.innerText = "Download the logo as SVG";
+    downloadButtonSVG.innerText = "SVG";
     downloadButtonSVG.addEventListener("click", () => downloadImage("svg"));
     document.querySelector("#downlaod").appendChild(downloadButtonSVG);
 
     const downloadButtonPNG = document.createElement("button");
-    downloadButtonPNG.innerText = "Download the logo as PNG";
+    downloadButtonPNG.innerText = "PNG";
     downloadButtonPNG.addEventListener("click", () => downloadImage("png"));
     document.querySelector("#downlaod2").appendChild(downloadButtonPNG);
     console.log('data',)
