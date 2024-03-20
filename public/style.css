@@ -54,6 +54,7 @@ nav {
 
 main {
     grid-area: main;
+    overflow: hidden
 }
 
 footer {
