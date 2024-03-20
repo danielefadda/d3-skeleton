@@ -255,7 +255,12 @@ function visualize(data, sideLength = 100) {
     const selection = svg.selectAll(".grid").data([matrix]);
     const symbol = selection.enter().append("g").attr("class", "grid").call(dg);
     const dt = logoName(symbol, data, sideLength).allTextColor("green");
+    d3.select("main")
+        .style("background-color", "#fff")
+        .style("border-top", "1px solid #fff")
+        .style("border-bottom", "1px solid #fff")
     return svg.call(dt)
+
 
 }
 
@@ -295,6 +300,12 @@ document.getElementById("change-color").addEventListener("click", function () {
     d3.selectAll('text').attr('fill', 'black');
     d3.selectAll('tspan').attr('fill', 'black');
     d3.selectAll('rect').attr('fill', 'black');
+
+    d3.select("main")
+        .style("background-color", "#fff")
+        .style("border-top", "1px solid #fff")
+        .style("border-bottom", "1px solid #fff")
+
     return colorOutput = '_black';
 
 });
@@ -302,6 +313,13 @@ document.getElementById("change-color-white").addEventListener("click", function
     d3.selectAll('text').attr('fill', 'white');
     d3.selectAll('tspan').attr('fill', 'white');
     d3.selectAll('rect').attr('fill', 'white');
+
+    d3.select("main")
+        .style("background-color", "#273580")
+        .style("border-top", "1px solid #fff")
+        .style("border-bottom", "1px solid #fff")
+
+
     return colorOutput = '_white';
 });
 
@@ -313,7 +331,7 @@ document.getElementById("change-color-white").addEventListener("click", function
 function downloadButtons() {
     <!-- Crea due bottoni per il download e inseriscili nel DOM Sotto il tag con id download -->
     const downloadButtonSVG = document.createElement("button");
-    downloadButtonSVG.innerText = "SVG";
+    downloadButtonSVG.innerText = "SVG*";
     downloadButtonSVG.addEventListener("click", () => downloadImage("svg"));
     document.querySelector("#downlaod").appendChild(downloadButtonSVG);
 

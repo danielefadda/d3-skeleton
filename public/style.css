@@ -20,11 +20,16 @@ h1 {
     font-family: 'Rajdhani-Medium', sans-serif;
     font-size: 50px;
     margin-bottom: 0;
+    color: #273580;
 }
 h2 {
     font-family: 'Rajdhani-Medium', sans-serif;
     font-size:21px;
     margin-top: 0;
+    color: #E83947;
+}
+h3  {
+    color: #273580;
 }
 
 p {
@@ -33,37 +38,62 @@ p {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
-        "header header"
+        "nav header"
         "nav main"
-        "footer footer";
-    column-gap: 40px;
-    row-gap: 20px;
+        "nav footer";
+    gap: 0;
     margin: 20px;
 }
 
 header {
     grid-area: header;
+    background-color: #273580;
+    padding: 20px;
+}
+header h1 {
+    font-family: 'Rajdhani-Medium', sans-serif;
+    font-size: 50px;
+    margin-bottom: 0;
+    color: white;
+    margin-top:18px;
+}
+
+header h2 {
+    font-family: 'Rajdhani-Medium', sans-serif;
+    font-size:21px;
+    margin-top: 0;
+    color: white;
 }
 
 nav {
     grid-area: nav;
+    background-color: #ddd ;
+    padding: 20px;
 }
 
 main {
     grid-area: main;
-    overflow: hidden
+    overflow: hidden;
+    border-right: 1px solid black;
+    border-top:1px solid #fff;
+    botder-bottom: 1px solid #fff;
 }
 
 footer {
     grid-area: footer;
+    background-color: #273580;
+    color: white;
+    padding: 20px;
+}
+footer a {
+    color:white;
 }
 
-
 .instruction-section {
-    border-bottom: 1px solid #E83947;
+    border-bottom: 1px solid #273580;
     padding-bottom: 20px;
 }
 #sideLength-slider,
@@ -76,6 +106,9 @@ label[for="sideLength-slider"] {
     padding: 10px; /* Adjust this value as needed */
     font-size: 16px;
     font-weight: bold;
+}
+#node-select:focus {
+    outline:none;
 }
 
 input[type=range] {
@@ -139,5 +172,17 @@ input[type=range]::-moz-range-thumb {
 #chart {
     display: block;
     padding: 50px;
-    border: 1px solid black;
+}
+
+.note {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.note a {
+    color: #E83947;
+}
+
+#downlaod {
+    margin-right: 10px;
 }
